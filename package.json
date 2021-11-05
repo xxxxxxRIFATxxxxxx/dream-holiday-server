@@ -1,0 +1,19 @@
+{
+  "name": "dream-holiday-server",
+  "version": "1.0.0",
+  "description": "This is a Dream Holiday web server. Here you can booked different types tours and travels offers and packages and track your orders. You can also post a tour package, delete package, delete your order and also update offer package. Here is also online booking system. You can also login through Google. Node JS and Express JS were used to build the web application.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start-dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Md. Rifat Islam",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongodb": "^4.1.3"
+  }
+}
