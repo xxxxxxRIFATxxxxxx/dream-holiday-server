@@ -120,6 +120,44 @@ async function run() {
             const result = await orderCollection.insertOne(order);
             res.send(result);
         });
+
+        // DELETE ORDER API
+        app.delete('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await orderCollection.deleteOne(query);
+            res.send(result);
+        });
+
+        // UPDATE ORDER API
+        app.put('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const order = req.body;
+            const updateDoc = {
+                $set: {
+                    name: order.name,
+                    email: order.email,
+                    phone: order.phone,
+                    date: order.date,
+                    tourName: order.tourName,
+                    price: order.price,
+                    image: order.image,
+                    description: order.description,
+                    duration: order.duration,
+                    status: order.status
+                },
+            };
+            const result = await orderCollection.updateOne(query, updateDoc);
+            res.send(result);
+        });
+
+        // POST CONTACT API
+        app.post('/contact', async (req, res) => {
+            const info = req.body;
+            const result = await contactCollection.insertOne(info);
+            res.send(result);
+        });
     }
 
     finally {
