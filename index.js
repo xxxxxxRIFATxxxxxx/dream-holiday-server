@@ -58,6 +58,68 @@ async function run() {
             const result = await tourCollection.insertOne(tour);
             res.send(result);
         });
+
+        // DELETE TOUR API
+        app.delete('/tours/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await products.deleteOne(query);
+            res.send(result);
+        });
+
+        // UPDATE TOUR API
+        app.put('/tours/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const tour = req.body;
+            const updateDoc = {
+                $set: {
+                    name: tour.name,
+                    price: tour.price,
+                    image: tour.image,
+                    description: tour.description,
+                    duration: tour.duration
+                },
+            };
+            const result = await tourCollection.updateOne(query, updateDoc);
+            res.send(result);
+        });
+
+        // GET ALL ORDER API
+        app.get('/orders', async (req, res) => {
+            const id = req.query.id;
+            const email = req.query.email;
+
+            let query;
+            let cursor;
+            let orders;
+
+            if (id) {
+                query = { _id: ObjectId(id) };
+                cursor = orderCollection.findOne(query);
+                orders = await cursor;
+            }
+
+            else if (email) {
+                query = { email: email };
+                cursor = orderCollection.find(query);
+                orders = await cursor.toArray();
+            }
+
+            else {
+                query = {};
+                cursor = orderCollection.find(query);
+                orders = await cursor.toArray();
+            }
+            res.send(orders);
+        });
+
+        // POST ORDER API
+        app.post('/orders', async (req, res) => {
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
+            res.send(result);
+        });
     }
 
     finally {
